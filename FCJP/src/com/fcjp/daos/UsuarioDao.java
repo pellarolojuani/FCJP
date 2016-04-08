@@ -16,11 +16,20 @@ public class UsuarioDao {
 								" (`id_usuario`,`usuario`,`nombre`,`apellido`,`mail`,`contrasenia`,`creation_date`)" +
 								" VALUES (?,?,?,?,?,?,?);";
 	
+	final String CHECK_USERNAME = "SELECT `usuario` FROM `usuarios` WHERE `usuario` = ?;";
+	
 	Usuario usuario;
 	Connection conn;
 	
 	public UsuarioDao(){
 		this.conn = ConfigurationDataBase.newConnection().getConn();		
+	}
+	
+	public boolean checkUserName(String userName) throws SQLException{
+		//verifica si el nombre de usuario existe en la tabla usuarios
+		PreparedStatement stmt = conn.prepareStatement(CHECK_USERNAME);
+		stmt.setString(1, userName);
+		return stmt.execute();
 	}
 	
 	public void insertUser() throws SQLException{

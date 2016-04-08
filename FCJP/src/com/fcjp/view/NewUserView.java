@@ -36,15 +36,19 @@ import com.vaadin.ui.VerticalLayout;
  
  
 @SuppressWarnings("serial")
-public class LoginView extends UI{
-
+public class NewUserView extends UI{
+      
+		TextField nombre;
+		TextField apellido;
+		TextField email;
        	TextField userTextField;
        	PasswordField passwordTextField;
+       	PasswordField repeatPasswordField;
        	VerticalLayout layout;
  
        
-       @WebServlet(value = "/*", asyncSupported = true)
-       @VaadinServletConfiguration(productionMode = false, ui = LoginView.class)
+       @WebServlet(value = "/newUser", asyncSupported = true)
+       @VaadinServletConfiguration(productionMode = false, ui = NewUserView.class)
        public static class Servlet extends VaadinServlet {
        }
       
@@ -73,15 +77,32 @@ public class LoginView extends UI{
             
             //***************************************************
                                        
-              Label textLabel1 = new Label("User name");
+              Label textLabel1 = new Label("Crear usuario");
               layout.addComponent(textLabel1);
       
               //Campo para ingresar el usuario
               userTextField = new TextField();
               userTextField.setImmediate(true);
-              userTextField.setInputPrompt("");
+              userTextField.setInputPrompt("Nombre de usuario");
               userTextField.setWidth("300px");
         //updateUserTextFieldCaption(0);
+       
+        apellido = new TextField();
+        apellido.setImmediate(true);
+        apellido.setInputPrompt("Apellido");
+        apellido.setWidth("300px");
+        //updateUserTextFieldCaption(0);
+        
+        nombre = new TextField();
+        nombre.setImmediate(true);
+        nombre.setInputPrompt("Nombre completo");
+        nombre.setWidth("300px");
+        //updateUserTextFieldCaption(0);
+        
+        email = new TextField();
+        email.setImmediate(true);
+        email.setInputPrompt("Correo electronico");
+        email.setWidth("300px");
        
         //Campo para ingresar la contrasenia
         passwordTextField = new PasswordField();
@@ -89,15 +110,20 @@ public class LoginView extends UI{
         passwordTextField.setMaxLength(30);
         //updatePasswordFieldCaption(0);
        
-        Label passwordLabel = new Label("Password:");
+        //Campo para repetir la contrasenia
+        repeatPasswordField = new PasswordField();
+        repeatPasswordField.setImmediate(true);
+        repeatPasswordField.setMaxLength(30);
+        //updatePasswordFieldCaption(0);
        
-        Button newUserButton = new Button("New User");
-        
-        Button submitButton = new Button("Login");
-        //submitButton.addClickListener(new Button.ClickListener() {
+        Label passwordLabel = new Label("Password:");
+        Label repeatPasswordLabel = new Label("Repeat password:");
+       
+        Button submitButton = new Button("Submit");
+        submitButton.addClickListener(new Button.ClickListener() {
                     
-          //           public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
-                           /*ClaveHash hash = new ClaveHash();
+                     public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
+                           ClaveHash hash = new ClaveHash();
                     	   layout.addComponent(new Label("Usuario creado exitosamente."));
                            Usuario unUsuario = new Usuario(	1, 
                         		   							nombre.getValue(),
@@ -113,20 +139,23 @@ public class LoginView extends UI{
                            	System.out.println("No se ha podido realizar el insert.");
                            }
                      }
-              }); */
+              });
                
+        layout.addComponent(nombre);
+        layout.addComponent(apellido);
         layout.addComponent(userTextField);
+        layout.addComponent(email);
         layout.addComponent(passwordLabel);
         layout.addComponent(passwordTextField);
+        layout.addComponent(repeatPasswordLabel);
+        layout.addComponent(repeatPasswordField);
         layout.addComponent(submitButton);
-        layout.addComponent(newUserButton);
        
         layout.setSpacing(true);
        
         layout.setMargin(new MarginInfo(true, true, true, false));
               layout.setSizeUndefined();
               layout.setComponentAlignment(submitButton, Alignment.MIDDLE_CENTER);
-              layout.setComponentAlignment(newUserButton, Alignment.MIDDLE_CENTER);
        
               // The view root layout
               //VerticalLayout viewLayout = new VerticalLayout(layout);
