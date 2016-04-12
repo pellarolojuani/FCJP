@@ -20,6 +20,10 @@ public class Usuario {
 		this.email = unEmail;
 	}
 	
+	public Usuario(String unUserName){
+		this.userName = unUserName;
+	}
+	
 	public int getId() {
 		return id;
 	}

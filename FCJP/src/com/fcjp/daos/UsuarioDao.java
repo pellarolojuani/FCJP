@@ -29,7 +29,7 @@ public class UsuarioDao {
 		//verifica si el nombre de usuario existe en la tabla usuarios
 		PreparedStatement stmt = conn.prepareStatement(CHECK_USERNAME);
 		stmt.setString(1, userName);
-		return stmt.execute();
+		return stmt.executeQuery().next();
 	}
 	
 	public void insertUser() throws SQLException{

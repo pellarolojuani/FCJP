@@ -92,28 +92,33 @@ public class LoginView extends UI{
         Label passwordLabel = new Label("Password:");
        
         Button newUserButton = new Button("New User");
+        newUserButton.addClickListener(new Button.ClickListener() {
+            
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
+            	getUI().getPage().setLocation("/FCJP/newUser");
+            }
+     }); 
         
         Button submitButton = new Button("Login");
-        //submitButton.addClickListener(new Button.ClickListener() {
+        submitButton.addClickListener(new Button.ClickListener() {
                     
-          //           public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
-                           /*ClaveHash hash = new ClaveHash();
-                    	   layout.addComponent(new Label("Usuario creado exitosamente."));
-                           Usuario unUsuario = new Usuario(	1, 
-                        		   							nombre.getValue(),
-                        		   							apellido.getValue(),
-                        		   							userTextField.getValue(), 
-                        		   							hash.getClaveEncriptada(passwordTextField.getValue()),
-                        		   							email.getValue());
+                     public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
+                           ClaveHash hash = new ClaveHash();
+                           Usuario unUsuario = new Usuario(	userTextField.getValue());
                            UsuarioDao unUsuarioDao = new UsuarioDao();
                            unUsuarioDao.setUsuario(unUsuario);
                            try {
-                           	unUsuarioDao.insertUser();
+                           	if (unUsuarioDao.checkUserName(userTextField.getValue())){
+                           		layout.addComponent(new Label("Usuario existente. OK"));
+                           	}else{ 
+                           		System.out.println("Usuario inexistente. ERROR.");
+                           		layout.addComponent(new Label("ERROR: Nombre de usuario incorrecto."));
+                           	}
                            }catch (SQLException e){
-                           	System.out.println("No se ha podido realizar el insert.");
+                           	System.out.println("No se ha podido verificar el usuario.");
                            }
                      }
-              }); */
+              }); 
                
         layout.addComponent(userTextField);
         layout.addComponent(passwordLabel);
